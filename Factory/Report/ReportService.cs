@@ -14,7 +14,7 @@ namespace FactoryAndStrategy.Report
             var reportList = GetEmptyListForSpecificStrategy(reportStrategy);
 
             var report = mapper.Map(CreateListOfUsers(), reportList);
-            
+
             return report;
         }
 
@@ -47,8 +47,9 @@ namespace FactoryAndStrategy.Report
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User, ManagerUserReport>();
-                cfg.CreateMap<User, CommonUserReport>();
+                cfg.CreateMap<User, UserReport>().ReverseMap();
+                cfg.CreateMap<User, ManagerUserReport>().ReverseMap();
+                cfg.CreateMap<User, CommonUserReport>().ReverseMap();
             });
             return new Mapper(config);
         }

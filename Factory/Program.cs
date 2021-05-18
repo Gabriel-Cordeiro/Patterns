@@ -3,6 +3,7 @@
 using FactoryAndStrategy.Report;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FactoryAndStrategy
 {
@@ -15,14 +16,12 @@ namespace FactoryAndStrategy
         {
             #region Manual mapping
 
-            //var commonReport = _reportService.GetReportByTypeUsingManualMapping(ReportType.Common);
-            //var ManagerReport = _reportService.GetReportByTypeUsingManualMapping(ReportType.Manager);
+            var commonReport = _reportService.GetReportByTypeUsingManualMapping(ReportType.Common);
+            var ManagerReport = _reportService.GetReportByTypeUsingManualMapping(ReportType.Manager);
 
-            //Console.WriteLine(commonReport.GetType());
-            //Console.WriteLine(ManagerReport.GetType());
-            //Console.WriteLine(commonReport);
-            //Console.WriteLine(ManagerReport);
-            //Console.ReadLine();
+            Console.WriteLine(commonReport.FirstOrDefault().GetType());
+            Console.WriteLine(ManagerReport.FirstOrDefault().GetType());
+            Console.ReadLine();
 
             #endregion
 
@@ -33,8 +32,6 @@ namespace FactoryAndStrategy
 
             Console.WriteLine(commonReportAutoMapper.GetType());
             Console.WriteLine(ManagerReportAutoMapper.GetType());
-            Console.WriteLine(commonReportAutoMapper);
-            Console.WriteLine(ManagerReportAutoMapper);
             Console.ReadLine();
 
             #endregion
