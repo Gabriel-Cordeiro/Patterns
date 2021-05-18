@@ -2,8 +2,15 @@
 {
     public class CommonUserReport : UserReport
     {
-        public CommonUserReport() : base(ReportType.Comum)
+        public CommonUserReport() : base(ReportType.Common)
         { }
+
+        private CommonUserReport(int id, string nome, string email) : base(ReportType.Common)
+        {
+            Id = id;
+            Nome = nome;
+            Email = email;
+        }
 
         public int Id { get; set; }
 
@@ -11,11 +18,9 @@
 
         public string Email { get; set; }
 
-        public override void MapUser(User user)
+        public override UserReport GetReport(User user)
         {
-            this.Id = user.Id;
-            this.Nome = user.Nome;
-            this.Email = user.Email;
+            return new CommonUserReport(user.Id, user.Nome, user.Email);
         }
     }
 }

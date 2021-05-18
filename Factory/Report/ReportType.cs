@@ -2,7 +2,7 @@
 {
     public enum ReportType
     {
-        Comum,
-        Gerente
+        Common,
+        Manager
     }
 }

@@ -2,8 +2,17 @@
 {
     public class ManagerUserReport : UserReport
     {
-        public ManagerUserReport() : base(ReportType.Gerente)
+        public ManagerUserReport() : base(ReportType.Manager)
         { }
+        private ManagerUserReport(int id, string nome, string email, string cpf, string senha) : base(ReportType.Manager)
+        {
+            Id = id;
+            Nome = nome;
+            Email = email;
+            Cpf = cpf;
+            Senha = senha;
+        }
+
         public int Id { get; set; }
 
         public string Nome { get; set; }
@@ -14,13 +23,9 @@
 
         public string Senha { get; set; }
 
-        public override void MapUser(User user)
+        public override UserReport GetReport(User user)
         {
-            this.Id = user.Id;
-            this.Nome = user.Nome;
-            this.Email = user.Email;
-            this.Cpf = user.Cpf;
-            this.Senha = user.Senha;
-        }
+            return new ManagerUserReport(user.Id, user.Nome, user.Email, user.Cpf, user.Senha);
+       }
     }
 }

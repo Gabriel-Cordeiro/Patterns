@@ -16,8 +16,8 @@ namespace FactoryAndStrategy.Report
 
         public static UserReport GetReportByType(ReportType type)
         {
-            _strategies.TryGetValue(ReportType.Comum, out UserReport report);
-            return report ?? throw new Exception("Tipo invalido. Valido apenas publica e privada.");
+            _strategies.TryGetValue(type, out UserReport report);
+            return report ?? throw new Exception("Tipo invalido");
         }
     }
 }

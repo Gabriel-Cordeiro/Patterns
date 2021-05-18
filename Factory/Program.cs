@@ -8,58 +8,37 @@ namespace FactoryAndStrategy
 {
     public class Program
     {
-        private static List<UserReport> _reports = new List<UserReport>();
-        private static List<User> _users = CreateListOfUsers();
+        private static IReportService _reportService = new ReportService();
+
 
         static void Main(string[] args)
         {
-            var mapper = ConfigureAutoMapper();
-            var reportType = ReportStrategyFactory.GetReportByType(ReportType.Comum);
+            #region Manual mapping
 
-            var reportList = GetEmptyReportList(reportType);
+            //var commonReport = _reportService.GetReportByTypeUsingManualMapping(ReportType.Common);
+            //var ManagerReport = _reportService.GetReportByTypeUsingManualMapping(ReportType.Manager);
 
-            var commonReportUsingAutoMapper = mapper.Map(_users, reportList);
+            //Console.WriteLine(commonReport.GetType());
+            //Console.WriteLine(ManagerReport.GetType());
+            //Console.WriteLine(commonReport);
+            //Console.WriteLine(ManagerReport);
+            //Console.ReadLine();
 
-            _users.ForEach(user =>
-            {
-                reportType.MapUser(user);
-                _reports.Add(reportType);
-            });
+            #endregion
 
-            Console.WriteLine(reportType);
-            Console.WriteLine(_reports);
-        }
+            #region Using AutoMapper
 
-        private static object GetEmptyReportList(UserReport reportType)
-        {
-            var listType = typeof(List<>);
-            var constructedListType = listType.MakeGenericType(reportType.GetType());
+            var commonReportAutoMapper = _reportService.GetReportByTypeUsingAutoMapper(ReportType.Common);
+            var ManagerReportAutoMapper = _reportService.GetReportByTypeUsingAutoMapper(ReportType.Manager);
 
-            var instance = Activator.CreateInstance(constructedListType);
-            return instance;
-        }
+            Console.WriteLine(commonReportAutoMapper.GetType());
+            Console.WriteLine(ManagerReportAutoMapper.GetType());
+            Console.WriteLine(commonReportAutoMapper);
+            Console.WriteLine(ManagerReportAutoMapper);
+            Console.ReadLine();
 
-        private static Mapper ConfigureAutoMapper()
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<User, ManagerUserReport>();
-                cfg.CreateMap<User, CommonUserReport>();
-            });
-            return new Mapper(config);
-        }
+            #endregion
 
-        private static List<User> CreateListOfUsers()
-        {
-            var user = new User(1, "Gabriel", "test@test", "1111111111", "teste");
-            var users = new List<User>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                users.Add(user);
-            }
-
-            return users;
         }
     }
 }

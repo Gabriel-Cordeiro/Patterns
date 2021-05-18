@@ -13,7 +13,7 @@ namespace FactoryAndStrategy.Report
 
         public ReportType ReportType { get; set; }
 
-        public abstract void MapUser(User user);
+        public abstract UserReport GetReport(User user);
 
     }
 }
